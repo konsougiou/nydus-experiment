@@ -66,7 +66,7 @@ def create_plot(duration_pairs: dict):
     def add_labels(bars):
         for bar in bars:
             height = bar.get_height()
-            plt.annotate('{}'.format(height),
+            plt.annotate('{:.2f}'.format(height),
                          xy=(bar.get_x() + bar.get_width() / 2, height),
                          xytext=(0, 3),
                          textcoords="offset points",
