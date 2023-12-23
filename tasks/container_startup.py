@@ -1,7 +1,11 @@
 from invoke import task
 from subprocess import run
 from time import time
+import os
+import re
 import matplotlib.pyplot as plt
+
+PLOTS_DIR = "../plots/"
 
 def measure_nydus_startup(image: str, name: str) -> float:
     run_cmd = f"sudo nerdctl --snapshotter nydus run --name {name} {image}"
@@ -33,6 +37,13 @@ def cleanup(image_pairs: dict) -> None:
 def create_plot(duration_pairs: dict):
 
 
+    plot_filenames = os.listdir(PLOTS_DIR)
+    if plot_filenames:
+        experiment_number = sorted([int(re.findall(r'\d+', filename)[0]) for filename in plot_filenames])[-1] + 1 
+    else:
+        experiment_number = 0
+    plot_filename = f"docker_vs_nydus_{experiment_number}.png"
+
     docker_durations = [pair[0] for pair in duration_pairs.values()]
     nydus_durations = [pair[1] for pair in duration_pairs.values()]
     names = list(duration_pairs.keys())
@@ -42,24 +53,36 @@ def create_plot(duration_pairs: dict):
 
     width = 0.35
 
-    plt.bar([i - width/2 for i in ind], docker_durations, width, label='Docker image statrup', color='orange')
-    plt.bar([i + width/2 for i in ind], nydus_durations, width, label='Nydus image statrup', color='blue')
+    bars1 = plt.bar([i - width/2 for i in ind], docker_durations, width, label='Docker image statrup', color='orange')
+    bars2 = plt.bar([i + width/2 for i in ind], nydus_durations, width, label='Nydus image statrup', color='blue')
 
     plt.ylabel('Time (s)')
     plt.title('Docker vs Nydus startup (cold start))')
 
     plt.xticks(ind, [f'{name.rsplit("-")[0]}' for name in names])
-
+    
     plt.legend()
+    
+    def add_labels(bars):
+        for bar in bars:
+            height = bar.get_height()
+            plt.annotate('{}'.format(height),
+                         xy=(bar.get_x() + bar.get_width() / 2, height),
+                         xytext=(0, 3),
+                         textcoords="offset points",
+                         ha='center', va='bottom')
 
-    plt.savefig('../plots/docker_vs_nydus.png')
+    add_labels(bars1)
+    add_labels(bars2)
+
+    plt.savefig(PLOTS_DIR + plot_filename) 
     
 
 def run_experiment():
     image_pairs = {
                     "centos-tmp":["centos:latest", "localhost:5000/centos-nydus:latest"],
                     "openjdk-tmp": ["openjdk:latest", "localhost:5000/openjdk-nydus:latest" ],
-                    "node-tmp": ["node:latest", "localhost:5000/node-nydus:latest"],
+                       "node-tmp": ["node:latest", "localhost:5000/node-nydus:latest"],
                     "tensorflow-tmp": ["tensorflow/tensorflow:latest", "localhost:5000/tensorflow-nydus:latest"]
                    }
     duration_pairs = {}
