@@ -1,0 +1,47 @@
+{
+  "created": "2021-09-15T18:20:05.184694267Z",
+  "architecture": "amd64",
+  "os": "linux",
+  "config": {
+    "Env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ],
+    "Cmd": [
+      "/bin/bash"
+    ],
+    "Labels": {
+      "org.label-schema.build-date": "20210915",
+      "org.label-schema.license": "GPLv2",
+      "org.label-schema.name": "CentOS Base Image",
+      "org.label-schema.schema-version": "1.0",
+      "org.label-schema.vendor": "CentOS"
+    }
+  },
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:fb5e39508c02fa069ac88e97fc31fbda500361d37cc21c9106ed970ab269217e",
+      "sha256:c291de3c31c460b922cdcffc080e2a6076503b413a69599152f5ed9a31a074c3"
+    ]
+  },
+  "history": [
+    {
+      "created": "2021-09-15T18:20:04.026056566Z",
+      "created_by": "/bin/sh -c #(nop) ADD file:805cb5e15fb6e0bb0326ca33fd2942e068863ce2a8491bb71522c652f31fb466 in / "
+    },
+    {
+      "created": "2021-09-15T18:20:04.987853959Z",
+      "created_by": "/bin/sh -c #(nop)  LABEL org.label-schema.schema-version=1.0 org.label-schema.name=CentOS Base Image org.label-schema.vendor=CentOS org.label-schema.license=GPLv2 org.label-schema.build-date=20210915",
+      "empty_layer": true
+    },
+    {
+      "created": "2021-09-15T18:20:05.184694267Z",
+      "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/bash\"]",
+      "empty_layer": true
+    },
+    {
+      "created_by": "Nydus Converter",
+      "comment": "Nydus Bootstrap Layer"
+    }
+  ]
+}

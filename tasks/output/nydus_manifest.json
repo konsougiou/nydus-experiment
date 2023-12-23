@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+  "config": {
+    "mediaType": "application/vnd.docker.container.image.v1+json",
+    "digest": "sha256:7dd20b52c4ef9883cfe8ae87157247e6908396ef761e878030d6390006a3ed1b",
+    "size": 1215
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.oci.image.layer.nydus.blob.v1",
+      "digest": "sha256:fb5e39508c02fa069ac88e97fc31fbda500361d37cc21c9106ed970ab269217e",
+      "size": 87396902,
+      "annotations": {
+        "containerd.io/snapshot/nydus-blob": "true"
+      }
+    },
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "digest": "sha256:2f8defc34d1b6ee7bb2a1d5a71582f67603ca991ac1f07639c92037e0a5a7b52",
+      "size": 565765,
+      "annotations": {
+        "containerd.io/snapshot/nydus-bootstrap": "true",
+        "containerd.io/snapshot/nydus-fs-version": "6"
+      }
+    }
+  ],
+  "annotations": {
+    "containerd.io/snapshot/nydus-builder-version": "v2.2.4",
+    "containerd.io/snapshot/nydus-fs-version": "6",
+    "containerd.io/snapshot/nydus-source-digest": "sha256:a27fd8080b517143cbbbab9dfb7c8571c40d67d534bbdee55bd6c473f432b177",
+    "containerd.io/snapshot/nydus-source-reference": "docker.io/library/centos:latest"
+  }
+}
